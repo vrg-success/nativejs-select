@@ -12,7 +12,7 @@
   </select>
 ```
 ## How Customization Select
-Just take select attribute name value + _select and you get selector by class `technologies_select`
+Just take select attribute name value + _select and you get selector by class `.technologies_select`
 ## Data attributes
 `data-placeholder="technologies"` sets the placeholder after clicking on the option the placeholder hides
 `data-fixed-placeholder="technologies"` sets the placeholder after clicking on the option the placeholder remains
