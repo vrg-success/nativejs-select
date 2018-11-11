@@ -1,36 +1,43 @@
 /*
 * API: https://github.com/FrontendMetis/nativejs-select
 */
-const prefix  = '_select';
-const selects = document.getElementsByTagName('select');
-// Html set
-for(let i = 0; i < selects.length; i++) {
-  selects[i].classList.add('hide_select');
-  let selectClassByName = selects[i].getAttribute('name');
-  let takePlaceholder = selects[i].getAttribute('data-placeholder');
-  let placeholder = '';
-  if(takePlaceholder) placeholder = takePlaceholder;
-  selects[i].insertAdjacentHTML('afterend', '\n <div class="select_common ' + selectClassByName + prefix + '">\n <div class="placeholder_select">' + placeholder + '</div>\n <ul class="select_items"></ul>\n </div>');
-  let checkTextPlaceholder = selects[i].nextElementSibling.querySelector('.placeholder_select');
-  if( !checkTextPlaceholder.textContent ) {
-   checkTextPlaceholder.insertAdjacentHTML('afterbegin', selects[i].firstElementChild.textContent); 
-  }
-  // Add fixed placholder
-  let fixedPlaholder = selects[i].getAttribute('data-fixed-placeholder');
-  if( fixedPlaholder ) {
-    selects[i].nextElementSibling.querySelector('.placeholder_select').insertAdjacentHTML('afterbegin', '\n <span class="fixed_placeholder">' + fixedPlaholder + '</span>');
-  }
-  // Add options
-  let selectOptions = selects[i].querySelectorAll('option');
-  let checkOptionText = selects[i].nextElementSibling.querySelector('.select_items');
-  if( !checkOptionText.textContent ) {
-    for(let j = 0; j < selectOptions.length; j++) {
-      checkOptionText.insertAdjacentHTML('beforeend', '\n  <li>' + selectOptions[j].textContent + '</li>'); 
+function renderSelects() {  
+  const prefix  = '_select';
+  const selects = document.getElementsByClassName('js-custom_select');
+  // Html set
+  for(let i = 0; i < selects.length; i++) {
+    let isCustom = selects[i].nextElementSibling;
+    if ( !isCustom ) {
+      selects[i].classList.add('hide_select');
+      let selectClassByName = selects[i].getAttribute('name');
+      let takePlaceholder = selects[i].getAttribute('data-placeholder');
+      let placeholder = '';
+      if(takePlaceholder) placeholder = takePlaceholder;
+      selects[i].insertAdjacentHTML('afterend', '\n <div class="select_common ' + selectClassByName + prefix + '">\n <div class="placeholder_select">' + placeholder + '</div>\n <ul class="select_items"></ul>\n </div>');
+      let checkTextPlaceholder = selects[i].nextElementSibling.querySelector('.placeholder_select');
+      if( !checkTextPlaceholder.textContent ) {
+        for ( let o = 0; o < selects[i].children.length; o++ ) {
+          if ( selects[i].children[o].selected ) {
+            checkTextPlaceholder.insertAdjacentHTML('afterbegin', selects[i].children[o].textContent); 
+          }
+        } 
+      }
+      // Add fixed placholder
+      let fixedPlaholder = selects[i].getAttribute('data-fixed-placeholder');
+      if( fixedPlaholder ) {
+        selects[i].nextElementSibling.querySelector('.placeholder_select').insertAdjacentHTML('afterbegin', '\n <span class="fixed_placeholder">' + fixedPlaholder + '</span>');
+      }
+      // Add options
+      let selectOptions = selects[i].querySelectorAll('option');
+      let checkOptionText = selects[i].nextElementSibling.querySelector('.select_items');
+      if( !checkOptionText.textContent ) {
+        for(let j = 0; j < selectOptions.length; j++) {
+          checkOptionText.insertAdjacentHTML('beforeend', '\n  <li>' + selectOptions[j].textContent + '</li>'); 
+        }
+      }
     }
   }
-}
 
-window.onload = function() {
   // Click on document and remove class .active from customSelect
   document.addEventListener('click', function() {
     for(let i = 0; i < selects.length; i++) {
@@ -84,3 +91,4 @@ window.onload = function() {
     loop(i);
   }
 }
+document.addEventListener('DOMContentLoaded', renderSelects());
