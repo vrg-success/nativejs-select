@@ -1,7 +1,7 @@
 /*
 * API: https://github.com/FrontendMetis/nativejs-select
 */
-function renderSelects() {  
+function renderSelects(){
   const prefix  = '_select';
   const selects = document.getElementsByClassName('js-custom_select');
   // Html set
@@ -50,41 +50,45 @@ function renderSelects() {
   });
   /* Add events */
   function loop(i) {
-    // Click on placeholder
-    selects[i].nextElementSibling.querySelector('.placeholder_select').addEventListener('click', function(e) {
-      let takeCurrentEl = e.currentTarget.parentNode;
-      for(let o = 0; o < selects.length; o++) {
-        if( takeCurrentEl !== selects[o].nextElementSibling ) {
-          selects[o].nextElementSibling.classList.remove('select_active');
+    if ( !selects[i].nextElementSibling.getAttribute('data-event') ) {
+      // Set attribute added
+      selects[i].nextElementSibling.setAttribute('data-event', true);
+      // Click on placeholder
+      selects[i].nextElementSibling.querySelector('.placeholder_select').addEventListener('click', function(e) {
+        let takeCurrentEl = e.currentTarget.parentNode;
+        for(let o = 0; o < selects.length; o++) {
+          if( takeCurrentEl !== selects[o].nextElementSibling ) {
+            selects[o].nextElementSibling.classList.remove('select_active');
+          }
         }
-      }
-      e.currentTarget.parentNode.classList.toggle('select_active');
-    });
-    selects[i].nextElementSibling.addEventListener('click', function(e) { e.stopPropagation(); });
-    // Click on options
-    let addEventToLi = selects[i].nextElementSibling.querySelector('.select_items');
-    let itemsLi = addEventToLi.querySelectorAll('li');
-    function loopInner(l) {
-      itemsLi[l].addEventListener('click', function(e) {
-        // Change text in placeholder
-        let optionVal = e.currentTarget.textContent;
-        let takePlaceholder = selects[i].getAttribute('data-fixed-placeholder');
-        if( takePlaceholder ) {
-          selects[i].nextElementSibling.querySelector('.placeholder_select').childNodes[2].textContent = optionVal;
-        } else {
-          selects[i].nextElementSibling.querySelector('.placeholder_select').textContent = optionVal;
-        }
-        selects[i].nextElementSibling.classList.remove('select_active');
-        // Add value in native select
-        let optionsNative = selects[i].querySelectorAll('option');
-        for(let j = 0; j < optionsNative.length; j++) {
-          optionsNative[j].removeAttribute('selected');
-        }
-        optionsNative[l].setAttribute('selected', 'selected');
+        e.currentTarget.parentNode.classList.toggle('select_active');
       });
-    }
-    for(let l = 0; l < itemsLi.length; l++) {
-      loopInner(l);
+      selects[i].nextElementSibling.addEventListener('click', function(e) { e.stopPropagation(); });
+      // Click on options
+      let addEventToLi = selects[i].nextElementSibling.querySelector('.select_items');
+      let itemsLi = addEventToLi.querySelectorAll('li');
+      function loopInner(l) {
+        itemsLi[l].addEventListener('click', function(e) {
+          // Change text in placeholder
+          let optionVal = e.currentTarget.textContent;
+          let takePlaceholder = selects[i].getAttribute('data-fixed-placeholder');
+          if( takePlaceholder ) {
+            selects[i].nextElementSibling.querySelector('.placeholder_select').childNodes[2].textContent = optionVal;
+          } else {
+            selects[i].nextElementSibling.querySelector('.placeholder_select').textContent = optionVal;
+          }
+          selects[i].nextElementSibling.classList.remove('select_active');
+          // Add value in native select
+          let optionsNative = selects[i].querySelectorAll('option');
+          for(let j = 0; j < optionsNative.length; j++) {
+            optionsNative[j].removeAttribute('selected');
+          }
+          optionsNative[l].setAttribute('selected', 'selected');
+        });
+      }
+      for(let l = 0; l < itemsLi.length; l++) {
+        loopInner(l);
+      }
     }
   }
   for(let i = 0; i < selects.length; i++) {
