@@ -1,5 +1,5 @@
 
-## Cross-browser testing provided by:
+## Cross-browser testing provided by
 <a href="https://www.browserstack.com/" target="_blank">
   <img width="222px" src="https://i1.wp.com/www.diogonunes.com/blog/wp-content/uploads/2016/07/browserstack-logo.png?resize=840%2C276">
 </a>
