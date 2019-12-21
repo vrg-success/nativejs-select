@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "lib": ["ES5", "ES6", "ES7", "DOM"]
+  },
+  "include": [
+    "./src/**/*", "polyfills/supportForIe11.js"
+  ],
+  "module": "deno"
+}
