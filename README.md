@@ -1,8 +1,10 @@
+[![npm version](https://badge.fury.io/js/nativejs-select.svg)](https://badge.fury.io/js/nativejs-select)
+
 # nativejs-select
 ![alt text](https://github.com//FrontendMetis/nativejs-select/blob/master/devserver/img/nativejs-select.png?raw=true)
 
-**Why do I need use this?** \
-I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6mb and have required options, the plugin written in Typescript without boilerplate
+**Why do I need use this?**
+I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6kb and have required options, the plugin written in Typescript without boilerplate
 
 **Getting started**
 ```
@@ -33,7 +35,7 @@ new NativejsSelect({
 });
 ```
 
-**Options** \
+**Options** 
 
 | Name | Type | Desc |
 | -------- | -------- | -------- | 
@@ -43,7 +45,7 @@ new NativejsSelect({
 | disableMobile? | boolean  | disable castomization in mobile devices for better accessibility |
 | renderOptions? | (option: HTMLElement, index: number, length: number) => string | you can render options like you want |
 
-**Html options** \
+**Html options** 
 
 | Name | 
 | -------- | 
