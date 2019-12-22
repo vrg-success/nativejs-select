@@ -127,12 +127,12 @@ export default class NativejsSelect {
   }
 
   private handleDocumentClick = (e): void => {
-    const currentCustomPlaceholder = e.target.closest('.nativejs-select__placeholder');
+    const clickedCustomPlaceholder = e.target.closest('.nativejs-select__placeholder');
 
     document.querySelectorAll('.nativejs-select').forEach(customSelect => {
       const customSelectPlaceholder = customSelect.querySelector('.nativejs-select__placeholder');
 
-      if (!currentCustomPlaceholder && currentCustomPlaceholder !== customSelectPlaceholder) {
+      if (!clickedCustomPlaceholder || clickedCustomPlaceholder !== customSelectPlaceholder) {
         customSelect.classList.remove('nativejs-select_active');
       }
     });
