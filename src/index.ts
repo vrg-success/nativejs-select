@@ -21,20 +21,24 @@ export default class NativejsSelect {
     document
       .querySelectorAll(selector)
       .forEach(select => {
-        const nativeSelect = select as HTMLSelectElement;
-        const customOptions = this.getCustomOptions(nativeSelect);
-        const customPlaceholder = this.getCustomPlaceholder(nativeSelect, customOptions);
+        const wasCustomed = select.nextElementSibling.classList.contains('nativejs-select');
 
-        nativeSelect.hidden = true;
-
-        select.insertAdjacentHTML('afterend', `
-          <div class="nativejs-select">
-            ${customPlaceholder}
-            ${customOptions}
-          </div>
-        `);
-
-        this.addHandlers(nativeSelect);
+        if (!wasCustomed) {
+          const nativeSelect = select as HTMLSelectElement;
+          const customOptions = this.getCustomOptions(nativeSelect);
+          const customPlaceholder = this.getCustomPlaceholder(nativeSelect, customOptions);
+  
+          nativeSelect.hidden = true;
+  
+          select.insertAdjacentHTML('afterend', `
+            <div class="nativejs-select">
+              ${customPlaceholder}
+              ${customOptions}
+            </div>
+          `);
+  
+          this.addHandlers(nativeSelect);
+        }
       });
   }
 
