@@ -21,7 +21,7 @@ export default class NativejsSelect {
     document
       .querySelectorAll(selector)
       .forEach(select => {
-        const wasCustomed = select.nextElementSibling.classList.contains('nativejs-select');
+        const wasCustomed = select.nextElementSibling && select.nextElementSibling.classList.contains('nativejs-select');
 
         if (!wasCustomed) {
           const nativeSelect = select as HTMLSelectElement;
