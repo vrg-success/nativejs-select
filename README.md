@@ -3,17 +3,17 @@
 # nativejs-select
 ![alt text](https://github.com//FrontendMetis/nativejs-select/blob/master/devserver/img/nativejs-select.png?raw=true)
 
-**Why do I need use this?**
+**Why do I need use this?**\
 I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6kb and have required options, the plugin written in Typescript without boilerplate
 
 **Getting started**
-```
+```bash
 yarn add nativejs-select 
 // or
 npm install nativejs-select
 ```
 
-```
+```html
 <select class="customSelect">
     <option value="react">React</option>
     <option value="vue">Vue</option>
@@ -22,7 +22,7 @@ npm install nativejs-select
 ```
 
 
-```
+```javascript
 import NativejsSelect from 'nativejs-select';
 // or
 const NativejsSelect = require('nativejs-select');
