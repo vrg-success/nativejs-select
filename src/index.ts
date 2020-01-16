@@ -1,12 +1,15 @@
 import isMobile from './utils/isMobile';
 
 
-interface TypeProps {
-  selector: string;
+export interface TypePropsWithoutSelector {
   placeholder?: string;
   fixedPlaceholder?: string;
   disableMobile?: boolean;
   renderOptions?: (option: HTMLElement, index: number, length: number) => string;
+};
+
+export interface TypeProps extends TypePropsWithoutSelector {
+  selector: string;
 };
 
 export default class NativejsSelect {

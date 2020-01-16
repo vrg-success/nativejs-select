@@ -1,5 +1,5 @@
 new NativejsSelect({
-  selector: '.customSelect',
+  selector: '.defaultSelect',
   disableMobile: true,
   renderOptions: (option, index, length) => {
     const icon = option.getAttribute('data-icon');

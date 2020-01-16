@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom/extend-expect';
 
 
-export default function checkCustomOptions(): void {
-  const defaultSelect = document.querySelector('.customSelect');
+export function checkCustomOptions(): void {
   const customSelect = document.querySelector('.nativejs-select');
 
   // Options

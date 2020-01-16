@@ -1,47 +1,41 @@
-import NativejsSelect from '../src/';
-import checkCustomSelect from './helpers/checkCustomSelect';
-import checkCustomPlaceholder from './helpers/checkCustomPlaceholder';
-import checkCustomOptions from './helpers/checkCustomOptions';
+import NativejsSelect from 'index';
+import {
+  checkDefaultAndCustomSelect,
+  checkCustomPlaceholder,
+  checkCustomOptions,
+  initWithOption,
+} from './helpers';
 
 
 describe('Custom select', () => {
   beforeEach(() => document.body.insertAdjacentHTML('beforeend', `
-    <select class="customSelect">
+    <select class="defaultSelect">
       <option value="react" data-icon="img/react.png">React</option>
       <option value="vue" data-icon="img/vue.png">Vue</option>
       <option value="svelte" data-icon="img/svelte.png">Svelte</option>
     </select>
   `));
-  
+
   afterEach(() => document.body.innerHTML = '');
 
-  test('Default mount', () => {
-    new NativejsSelect({ selector: '.customSelect' });
+  test('Mount default', () => initWithOption());
 
-    checkCustomSelect();
-    checkCustomPlaceholder();
-    checkCustomOptions();
-  });
+  test('Mount with option placeholder', () => initWithOption({ placeholder: 'Placholder' }));
+  test('Mount with attribute option placeholder', () => initWithOption({ placeholder: 'Placholder' }, true));
 
-  test('Mount with attribute placeholder', () => {
-    document
-      .querySelector('.customSelect')
-      .setAttribute('data-placeholder', 'Placeholder');
-    new NativejsSelect({ selector: '.customSelect' });
+  test('Mount with option fxiedPlaceholder', () => initWithOption({ fixedPlaceholder: 'Fixed placeholder:' }));
+  //test('Mount with attribute option fxied-placeholder', () => initWithOption({ placeholder: 'Fixed placeholder:' }, true));
 
-    checkCustomSelect();
-    checkCustomPlaceholder('Placeholder');
-    checkCustomOptions();
-  });
+  describe('Handle', () => {
+    test('Open custom select', () => {
+      new NativejsSelect({ selector: '.defaultSelect' });
+      const placeholderBtn = document.querySelector('.nativejs-select__placeholder') as HTMLElement;
 
-  test('Mount with option placeholder', () => {
-    new NativejsSelect({ 
-      selector: '.customSelect', 
-      placeholder: 'Placeholder' 
+      placeholderBtn.click();
+
+      checkDefaultAndCustomSelect(true);
+      checkCustomPlaceholder();
+      checkCustomOptions();
     });
-
-    checkCustomSelect();
-    checkCustomPlaceholder('Placeholder');
-    checkCustomOptions();
   });
 });
