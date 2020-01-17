@@ -28,7 +28,6 @@ export function initWithOption(
   new NativejsSelect(props);
 
   checkDefaultAndCustomSelect();
-  checkCustomOptions();
-
+  checkCustomOptions(option);
   checkCustomPlaceholder(option);
 }

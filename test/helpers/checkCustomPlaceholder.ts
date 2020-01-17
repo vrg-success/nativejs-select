@@ -13,20 +13,32 @@ export function checkCustomPlaceholder(
 
   expect(customPlaceholder).toHaveClass('nativejs-select__placeholder');
 
-  if (optionKey === 'placeholder') {
-    expect(customPlaceholder.textContent.trim()).toBe(optionVal);
-  } 
-  else if (optionKey == 'fixedPlaceholder')  {
-    expect(customPlaceholder.children).toHaveLength(1);
+  switch (optionKey) {
+    case 'placeholder':
+      expect(customPlaceholder.textContent.trim()).toBe(optionVal);
+      break;
 
-    const fixedPlaceholder = customPlaceholder.children[0];
-    expect(fixedPlaceholder.tagName).toBe('SPAN');
-    expect(fixedPlaceholder).toHaveClass('nativejs-select__placeholder_fixed');
-  } 
-  else {
-    const defaultSelect = document.querySelector('.defaultSelect') as HTMLSelectElement;
-    const defaultPlaceholder = defaultSelect.children[defaultSelect.selectedIndex].textContent;
+    case 'fixedPlaceholder':
+      const fixedPlaceholder = customPlaceholder.children[0];
+      const childNodes = customPlaceholder.childNodes;
+      const lastValFromPlaceholder = childNodes[childNodes.length - 1].nodeValue.trim();
 
-    expect(customPlaceholder).toHaveTextContent(defaultPlaceholder);
+      expect(customPlaceholder.children).toHaveLength(1);
+      expect(lastValFromPlaceholder).toBe( _getDefaultPlaceholder());
+
+      expect(fixedPlaceholder).toHaveClass('nativejs-select__placeholder_fixed');
+      expect(fixedPlaceholder).toHaveTextContent(optionVal);
+      break;
+
+    default:
+      expect(customPlaceholder).toHaveTextContent( _getDefaultPlaceholder() );
   }
+}
+
+
+function _getDefaultPlaceholder(): string {
+  const defaultSelect = document.querySelector('.defaultSelect') as HTMLSelectElement;
+  const defaultPlaceholder = defaultSelect.children[defaultSelect.selectedIndex].textContent;
+
+  return defaultPlaceholder;
 }

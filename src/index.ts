@@ -71,7 +71,7 @@ export default class NativejsSelect {
       placeholder,
       fixedPlaceholder,
     } = this.props;
-    const fixedplaceholderText = select.getAttribute('data-fixed-placeholder') || fixedPlaceholder;
+    const fixedplaceholderText = select.getAttribute('data-fixedPlaceholder') || fixedPlaceholder;
     const placeholderText = select.getAttribute('data-placeholder') || placeholder;
     let placeholderContent = '';
 

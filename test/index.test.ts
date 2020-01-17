@@ -4,6 +4,7 @@ import {
   checkCustomPlaceholder,
   checkCustomOptions,
   initWithOption,
+  toggleShowCustomOptions,
 } from './helpers';
 
 
@@ -18,24 +19,33 @@ describe('Custom select', () => {
 
   afterEach(() => document.body.innerHTML = '');
 
-  test('Mount default', () => initWithOption());
+  test('Render default', () => initWithOption() );
+  test('Render with option placeholder', () => initWithOption({ placeholder: 'Placholder' }) );
+  test('Render with attribute option placeholder', () => initWithOption({ placeholder: 'Placholder' }, true) );
+  test('Render with option fxiedPlaceholder', () => initWithOption({ fixedPlaceholder: 'Fixed placeholder:' }) );
+  test('Render with attribute option fxied-placeholder', () => initWithOption({ fixedPlaceholder: 'Fixed placeholder:' }, true) );
 
-  test('Mount with option placeholder', () => initWithOption({ placeholder: 'Placholder' }));
-  test('Mount with attribute option placeholder', () => initWithOption({ placeholder: 'Placholder' }, true));
+  test('Render custom options', () => {
+    initWithOption({ 
+      renderOptions: (option, index, length) => {
+        const icon = option.getAttribute('data-icon');
+    
+        return `
+          ${icon ? `<img src="${icon}" alt="icon" style="width: 20px;" />` : ''}
+          ${option.textContent}
+        `;
+      }
+    })
+  });
 
-  test('Mount with option fxiedPlaceholder', () => initWithOption({ fixedPlaceholder: 'Fixed placeholder:' }));
-  //test('Mount with attribute option fxied-placeholder', () => initWithOption({ placeholder: 'Fixed placeholder:' }, true));
+  test('Handle toggle show custom options', () => {
+    new NativejsSelect({ selector: '.defaultSelect' });
+    const placeholderBtn = document.querySelector('.nativejs-select__placeholder') as HTMLElement;
 
-  describe('Handle', () => {
-    test('Open custom select', () => {
-      new NativejsSelect({ selector: '.defaultSelect' });
-      const placeholderBtn = document.querySelector('.nativejs-select__placeholder') as HTMLElement;
-
-      placeholderBtn.click();
-
-      checkDefaultAndCustomSelect(true);
-      checkCustomPlaceholder();
-      checkCustomOptions();
-    });
+    placeholderBtn.click();
+    toggleShowCustomOptions(true);
+    
+    placeholderBtn.click();
+    toggleShowCustomOptions(false);
   });
 });
