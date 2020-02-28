@@ -1,16 +1,21 @@
 import isMobile from './utils/isMobile';
 
 
-interface TypeProps {
-  selector: string;
+interface NotRequiredProps {
   placeholder?: string;
   fixedPlaceholder?: string;
   disableMobile?: boolean;
   renderOptions?: (option: HTMLElement, index: number, length: number) => string;
 };
 
+interface RequiredProps {
+  selector: string;
+};
+
+export interface TProps extends RequiredProps, NotRequiredProps {};
+
 export default class NativejsSelect {
-  constructor(private props: TypeProps) {
+  constructor(private props: TProps) {
     if (props.disableMobile && isMobile.any()) return;
     this.renderCustomSelect();
   }
@@ -68,7 +73,7 @@ export default class NativejsSelect {
       placeholder,
       fixedPlaceholder,
     } = this.props;
-    const fixedplaceholderText = select.getAttribute('data-fixed-placeholder') || fixedPlaceholder;
+    const fixedplaceholderText = select.getAttribute('data-fixedPlaceholder') || fixedPlaceholder;
     const placeholderText = select.getAttribute('data-placeholder') || placeholder;
     let placeholderContent = '';
 
