@@ -1,19 +1,21 @@
 import isMobile from './utils/isMobile';
 
 
-export interface TypePropsWithoutSelector {
+interface NotRequiredProps {
   placeholder?: string;
   fixedPlaceholder?: string;
   disableMobile?: boolean;
   renderOptions?: (option: HTMLElement, index: number, length: number) => string;
 };
 
-export interface TypeProps extends TypePropsWithoutSelector {
+interface RequiredProps {
   selector: string;
 };
 
+export interface TProps extends RequiredProps, NotRequiredProps {};
+
 export default class NativejsSelect {
-  constructor(private props: TypeProps) {
+  constructor(private props: TProps) {
     if (props.disableMobile && isMobile.any()) return;
     this.renderCustomSelect();
   }
