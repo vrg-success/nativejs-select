@@ -4,7 +4,7 @@
 ![alt text](https://github.com//FrontendMetis/nativejs-select/blob/master/devserver/img/nativejs-select.png?raw=true)
 
 **Why do I need use this?**\
-I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6kb and have required options, the plugin written in Typescript without boilerplate
+I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6kb and have required options, the plugin written on Typescript without boilerplate
 
 **Getting started**
 ```bash
