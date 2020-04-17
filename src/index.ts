@@ -53,7 +53,7 @@ export default class NativejsSelect {
           class="nativejs-select__option"
           ${option.selected ? 'data-selected="true"' : ''}
         >
-          <button class="nativejs-select__option_btn">
+          <button class="nativejs-select__option_btn" type="button">
             ${renderOptions ? renderOptions(option, ind, optionsLength) : option.innerHTML}
           </button>
         </li>`
