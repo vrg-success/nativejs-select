@@ -50,7 +50,7 @@ new NativejsSelect({
 | Name | 
 | -------- | 
 | data-placeholder  | 
-| data-fixed-placeholder |
+| data-fixedPlaceholder |
 
 **Cross-browser testing provided by** \
 <a href="https://www.browserstack.com/" target="_blank">
