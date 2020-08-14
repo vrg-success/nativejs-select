@@ -1,18 +1,20 @@
 import NativejsSelect from 'index';
 
-
 describe('Custom select', () => {
   beforeEach(() => {
-    document.body.insertAdjacentHTML('beforeend', `
+    document.body.insertAdjacentHTML(
+      'beforeend',
+      `
     <select class="defaultSelect">
       <option value="react" data-icon="img/react.png">React</option>
       <option value="vue" data-icon="img/vue.png">Vue</option>
       <option value="svelte" data-icon="img/svelte.png">Svelte</option>
     </select>
-  `);
+  `
+    );
   });
 
-  afterEach(() => document.body.innerHTML = '');
+  afterEach(() => (document.body.innerHTML = ''));
 
   test('Render default', () => {
     new NativejsSelect({ selector: '.defaultSelect' });
@@ -51,14 +53,14 @@ describe('Custom select', () => {
   test('Render with custom options', () => {
     new NativejsSelect({
       selector: '.defaultSelect',
-      renderOptions: (option) => {
+      renderOptions: option => {
         const icon = option.getAttribute('data-icon');
 
         return `
           ${icon ? `<img src="${icon}" alt="icon" style="width: 20px;" />` : ''}
           ${option.textContent}
         `;
-      }
+      },
     });
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
@@ -68,25 +70,29 @@ describe('Custom select', () => {
       selector: '.defaultSelect',
       fixedPlaceholder: 'fixed: placeholder',
       placeholder: 'Placholder',
-      renderOptions: (option) => {
+      renderOptions: option => {
         const icon = option.getAttribute('data-icon');
 
         return `
           ${icon ? `<img src="${icon}" alt="icon" style="width: 20px;" />` : ''}
           ${option.textContent}
         `;
-      }
+      },
     });
 
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
-  
+
   test('Render with disableMobile option', () => {
     new NativejsSelect({ selector: '.defaultSelect', disableMobile: true });
     expect(document.querySelectorAll('.nativejs-select').length).toBe(1);
 
     // Mock mobile device
-    (navigator as any).__defineGetter__('userAgent', () => 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Mobile Safari/537.36');
+    (navigator as any).__defineGetter__(
+      'userAgent',
+      () =>
+        'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.122 Mobile Safari/537.36'
+    );
     // Remove previos custom select
     const customSelect = document.querySelector('.nativejs-select');
     customSelect.parentNode.removeChild(customSelect);
@@ -134,7 +140,7 @@ describe('Custom select', () => {
       expect(select.selectedIndex).toBe(ind);
 
       // Check data attribute
-      expect((document.querySelectorAll('[data-selected]')).length).toBe(1);
+      expect(document.querySelectorAll('[data-selected]').length).toBe(1);
       expect((option.parentNode as HTMLElement).getAttribute('data-selected')).toBe('true');
 
       // Check html of placehoder
@@ -142,4 +148,14 @@ describe('Custom select', () => {
     });
   });
 
+  test('Check for custom select buttons not trigger submit form', () => {
+    new NativejsSelect({ selector: '.defaultSelect' });
+
+    const customSelect = document.querySelector('.nativejs-select');
+    const selectButtons = customSelect?.querySelectorAll('button');
+
+    selectButtons.forEach(btn => {
+      expect(btn.getAttribute('type')).toBe('button');
+    });
+  });
 });

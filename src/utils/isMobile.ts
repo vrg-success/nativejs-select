@@ -5,7 +5,7 @@ interface TypeIsMobile {
   Opera: () => boolean;
   Windows: () => boolean;
   any: () => boolean;
-};
+}
 
 const isMobile: TypeIsMobile = {
   Android: () => {
@@ -24,8 +24,8 @@ const isMobile: TypeIsMobile = {
     return /IEMobile/i.test(navigator.userAgent) || /WPDesktop/i.test(navigator.userAgent);
   },
   any: () => {
-    return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-  }
+    return isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows();
+  },
 };
 
 export default isMobile;
