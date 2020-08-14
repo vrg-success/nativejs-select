@@ -1,6 +1,6 @@
 {
   "name": "nativejs-select",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Customizable select with vanilla js",
   "license": "MIT",
   "scripts": {
@@ -20,6 +20,9 @@
   "keywords": [
     "select",
     "custom-select",
+    "select-custom",
+    "js-select",
+    "select-js",
     "plugin"
   ],
   "repository": {
