@@ -79,7 +79,7 @@ export default class NativejsSelect {
     }
 
     return `
-      <button class="nativejs-select__placeholder">
+      <button class="nativejs-select__placeholder" type="button">
         ${fixedplaceholderText ? `<span class="nativejs-select__placeholder_fixed">${fixedplaceholderText}</span>` : ''}
         ${placeholderContent}
       </button>

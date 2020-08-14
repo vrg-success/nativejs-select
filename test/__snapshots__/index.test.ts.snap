@@ -2,7 +2,9 @@
 
 exports[`Custom select Render default 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder">
+  <button class="nativejs-select__placeholder"
+          type="button"
+  >
     React
   </button>
   <ul class="nativejs-select__options">
@@ -35,7 +37,9 @@ exports[`Custom select Render default 1`] = `
 
 exports[`Custom select Render with all ui options 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder">
+  <button class="nativejs-select__placeholder"
+          type="button"
+  >
     <span class="nativejs-select__placeholder_fixed">
       fixed: placeholder
     </span>
@@ -83,7 +87,9 @@ exports[`Custom select Render with all ui options 1`] = `
 
 exports[`Custom select Render with custom options 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder">
+  <button class="nativejs-select__placeholder"
+          type="button"
+  >
     <img src="img/react.png"
          alt="icon"
          style="width: 20px;"
@@ -132,7 +138,9 @@ exports[`Custom select Render with custom options 1`] = `
 
 exports[`Custom select Render with fixed placeholder 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder">
+  <button class="nativejs-select__placeholder"
+          type="button"
+  >
     <span class="nativejs-select__placeholder_fixed">
       fixed: placeholder
     </span>
@@ -168,7 +176,9 @@ exports[`Custom select Render with fixed placeholder 1`] = `
 
 exports[`Custom select Render with fixedPlaceholder and placeholder 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder">
+  <button class="nativejs-select__placeholder"
+          type="button"
+  >
     <span class="nativejs-select__placeholder_fixed">
       fixed: placeholder
     </span>
@@ -204,7 +214,9 @@ exports[`Custom select Render with fixedPlaceholder and placeholder 1`] = `
 
 exports[`Custom select Render with placeholder 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder">
+  <button class="nativejs-select__placeholder"
+          type="button"
+  >
     Placholder
   </button>
   <ul class="nativejs-select__options">
