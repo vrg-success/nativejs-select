@@ -47,10 +47,10 @@ new NativejsSelect({
 
 **Html attributes**
 
-| Name                  |
-| --------------------- |
-| data-placeholder      |
-| data-fixedPlaceholder |
+| Name                   |
+| ---------------------- |
+| data-placeholder       |
+| data-fixed-placeholder |
 
 **Cross-browser testing provided by** \
 <a href="https://www.browserstack.com/" target="_blank">
