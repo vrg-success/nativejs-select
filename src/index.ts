@@ -1,4 +1,5 @@
-import isMobile from './utils/isMobile';
+import { isMobile } from './utils';
+import selectTemplate from 'templates/select.template';
 
 export interface TNativejsSelectProps {
   selector: string;
@@ -6,136 +7,138 @@ export interface TNativejsSelectProps {
   fixedPlaceholder?: string;
   disableMobile?: boolean;
   renderOptions?: (option: HTMLElement, index: number, length: number) => string;
+  enableSearch?: boolean;
 }
 
 export default class NativejsSelect {
-  constructor(private props: TNativejsSelectProps) {
-    if (props.disableMobile && isMobile.any()) return;
+  selects: NodeListOf<HTMLSelectElement>;
+  props: TNativejsSelectProps;
+
+  constructor(props: TNativejsSelectProps) {
+    if (props.disableMobile && isMobile.any()) {
+      return;
+    }
+    this.props = props;
+    this.selects = document.querySelectorAll(this.props.selector);
     this.renderCustomSelect();
+    this.initHandlers();
   }
 
   private renderCustomSelect(): void {
-    const { selector } = this.props;
+    this.selects.forEach(select => {
+      const hasCustomSelect = select.nextElementSibling?.classList?.contains('nativejs-select');
+      hasCustomSelect && select.parentNode.removeChild(select.nextElementSibling);
 
-    document.querySelectorAll(selector).forEach(select => {
-      const wasCustomed = select.nextElementSibling && select.nextElementSibling.classList.contains('nativejs-select');
-
-      if (!wasCustomed) {
-        const nativeSelect = select as HTMLSelectElement;
-        const customOptions = this.getCustomOptions(nativeSelect);
-        const customPlaceholder = this.getCustomPlaceholder(nativeSelect, customOptions);
-
-        nativeSelect.hidden = true;
-
-        select.insertAdjacentHTML(
-          'afterend',
-          `
-            <div class="nativejs-select">
-              ${customPlaceholder}
-              ${customOptions}
-            </div>
-          `
-        );
-
-        this.addHandlers(nativeSelect);
-      }
+      select.hidden = true;
+      select.insertAdjacentHTML('afterend', selectTemplate(select, this.props));
     });
   }
 
-  private getCustomOptions(select: HTMLSelectElement): string {
-    const { renderOptions } = this.props;
-    const options = Array.from(select.querySelectorAll('option'));
-    const optionsLength = options.length;
-
-    const customOptions = options.map((option, ind) => {
-      return `<li 
-          class="nativejs-select__option"
-          ${option.selected ? 'data-selected="true"' : ''}
-        >
-          <button class="nativejs-select__option_btn" type="button">
-            ${renderOptions ? renderOptions(option, ind, optionsLength) : option.innerHTML}
-          </button>
-        </li>`;
-    });
-
-    return `<ul class="nativejs-select__options">${customOptions.join('')}</ul>`;
-  }
-
-  private getCustomPlaceholder(select: HTMLSelectElement, customOptions: string): string {
-    const { placeholder, fixedPlaceholder } = this.props;
-    const fixedplaceholderText = select.getAttribute('data-fixedPlaceholder') || fixedPlaceholder;
-    const placeholderText = select.getAttribute('data-placeholder') || placeholder;
-    let placeholderContent = '';
-
-    if (!placeholderText) {
-      const wrpCustomOptions = document.createElement('div');
-      wrpCustomOptions.innerHTML = customOptions;
-
-      placeholderContent = wrpCustomOptions.querySelector(
-        '.nativejs-select__option[data-selected="true"] .nativejs-select__option_btn'
-      ).innerHTML;
-    } else {
-      placeholderContent = placeholderText;
-    }
-
-    return `
-      <button class="nativejs-select__placeholder" type="button">
-        ${fixedplaceholderText ? `<span class="nativejs-select__placeholder_fixed">${fixedplaceholderText}</span>` : ''}
-        ${placeholderContent}
-      </button>
-    `;
-  }
-
-  private addHandlers(select: HTMLSelectElement): void {
-    const customSelect = select.nextElementSibling;
-
-    customSelect.querySelector('.nativejs-select__placeholder').addEventListener('click', this.handleToggleOpenSelect);
-    customSelect.querySelectorAll('.nativejs-select__option_btn').forEach(option => {
-      option.addEventListener('click', e => {
-        this.handleChooseOption(e, select as HTMLSelectElement);
-      });
-    });
+  private initHandlers(): void {
     document.addEventListener('click', this.handleDocumentClick);
+
+    this.selects.forEach(select => {
+      const customSelect = select.nextElementSibling as HTMLDivElement;
+      const placeholder = customSelect.querySelector('.nativejs-select__placeholder');
+      const search = customSelect.querySelector('.nativejs-select__search-inp');
+      const options = customSelect.querySelectorAll('.nativejs-select__option') as NodeListOf<
+        HTMLButtonElement
+      >;
+
+      placeholder.addEventListener('click', this.handleToggleOpenSelect);
+      search?.addEventListener('input', this.handleSearch(options, customSelect));
+      options.forEach((option, ind) =>
+        option.addEventListener('click', e => {
+          this.handleChooseOption(e, select, options, ind);
+        })
+      );
+    });
   }
 
-  private handleToggleOpenSelect = (e): void => {
-    e.currentTarget.parentNode.classList.toggle('nativejs-select_active');
+  private handleDocumentClick = (e: Event): void => {
+    const target = e.target as Element;
+    const currentCustomSelect = target.closest('.nativejs-select');
+
+    if (!currentCustomSelect) {
+      Array.from(document.querySelectorAll('.nativejs-select')).forEach(select =>
+        select.classList.remove('nativejs-select_active')
+      );
+    }
   };
 
-  private handleChooseOption(e, select: HTMLSelectElement): void {
-    const ct = e.currentTarget;
-    const customSelect = select.nextElementSibling;
-    const customOptions = Array.from(customSelect.querySelectorAll('.nativejs-select__option'));
-    const customPlaceholder = customSelect.querySelector('.nativejs-select__placeholder');
-    const fixedPlaceholder = customPlaceholder.querySelector('.nativejs-select__placeholder_fixed');
+  private handleToggleOpenSelect = (e: Event): void => {
+    const ct = e.currentTarget as HTMLButtonElement;
+    const currentCustomSelect = ct.closest('.nativejs-select');
+    const searchInp = currentCustomSelect.querySelector('.nativejs-select__search-inp');
 
-    // Remove selecterd attr
-    customOptions.forEach(option => {
-      option.removeAttribute('data-selected');
-    });
-
-    // Add selected attr to current el
-    ct.parentNode.setAttribute('data-selected', 'true');
-
-    // Change custom placeholder html
-    customPlaceholder.innerHTML = `
-      ${fixedPlaceholder ? fixedPlaceholder.outerHTML : ''}
-      ${ct.innerHTML}
-    `;
-
-    // Change native select value
-    select.selectedIndex = customOptions.indexOf(ct.parentNode);
-  }
-
-  private handleDocumentClick = (e): void => {
-    const clickedCustomPlaceholder = e.target.closest('.nativejs-select__placeholder');
-
-    document.querySelectorAll('.nativejs-select').forEach(customSelect => {
-      const customSelectPlaceholder = customSelect.querySelector('.nativejs-select__placeholder');
-
-      if (!clickedCustomPlaceholder || clickedCustomPlaceholder !== customSelectPlaceholder) {
-        customSelect.classList.remove('nativejs-select_active');
+    // Toggle active select
+    Array.from(document.querySelectorAll('.nativejs-select')).forEach(select => {
+      if (select === currentCustomSelect) {
+        select.classList.toggle('nativejs-select_active');
+      } else {
+        select.classList.remove('nativejs-select_active');
       }
     });
+
+    // Add focus for search input if have
+    if (currentCustomSelect.classList.contains('nativejs-select_active') && searchInp) {
+      (searchInp as HTMLInputElement).focus();
+    }
   };
+
+  private handleSearch = (
+    initOptions: NodeListOf<HTMLButtonElement>,
+    customSelect: HTMLDivElement
+  ): ((e: Event) => void) => {
+    return (e: Event): void => {
+      const optionsWrp = customSelect.querySelector('.nativejs-select__options');
+      const searchVal = (e.target as HTMLInputElement).value.trim().toLocaleLowerCase();
+
+      Array.from(optionsWrp.children).forEach(item => item.parentNode.removeChild(item));
+
+      if (searchVal) {
+        Array.from(initOptions).forEach(option => {
+          const optionVal = option.textContent.trim().toLocaleLowerCase();
+
+          if (optionVal.search(searchVal) !== -1) {
+            optionsWrp.appendChild(option);
+          }
+        });
+      } else {
+        Array.from(initOptions).forEach(option => optionsWrp.appendChild(option));
+      }
+    };
+  };
+
+  private handleChooseOption(
+    e: Event,
+    select: HTMLSelectElement,
+    initOptions: NodeListOf<HTMLButtonElement>,
+    ind: number
+  ): void {
+    const ct = e.currentTarget as HTMLSelectElement;
+    const customSelect = ct.closest('.nativejs-select');
+
+    const searchInp = customSelect.querySelector('.nativejs-select__search-inp');
+    const optionsWrp = customSelect.querySelector('.nativejs-select__options');
+    const customOptions = Array.from(customSelect.querySelectorAll('.nativejs-select__option'));
+    const customPlaceholderVal = customSelect.querySelector('.nativejs-select__placeholder-value');
+
+    // Set selected option
+    select.selectedIndex = ind;
+    customOptions.forEach(option => option.removeAttribute('data-selected'));
+    ct.setAttribute('data-selected', 'true');
+
+    // Show selected option
+    customSelect.classList.remove('nativejs-select_active');
+    customPlaceholderVal.innerHTML = ct.innerHTML;
+
+    // Set inited options for dropdown and reset search input if have
+    Array.from(optionsWrp.children).forEach(item => item.parentNode.removeChild(item));
+    Array.from(initOptions).forEach(option => optionsWrp.appendChild(option));
+    searchInp && ((searchInp as HTMLInputElement).value = '');
+
+    // Trigger change event
+    select.dispatchEvent(new CustomEvent('change'));
+  }
 }

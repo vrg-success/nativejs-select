@@ -1,28 +1,26 @@
 import NativejsSelect from 'index';
 
-describe('Custom select', () => {
-  beforeEach(() => {
-    document.body.insertAdjacentHTML(
-      'beforeend',
-      `
-    <select class="defaultSelect">
+const insertSelect = (): void =>
+  document.body.insertAdjacentHTML(
+    'beforeend',
+    `<select class="defaultSelect">
       <option value="react" data-icon="img/react.png">React</option>
       <option value="vue" data-icon="img/vue.png">Vue</option>
       <option value="svelte" data-icon="img/svelte.png">Svelte</option>
-    </select>
-  `
-    );
-  });
+    </select>`
+  );
 
+describe('Custom select', () => {
+  beforeEach(() => insertSelect());
   afterEach(() => (document.body.innerHTML = ''));
 
-  test('Render default', () => {
+  it('Render default', () => {
     new NativejsSelect({ selector: '.defaultSelect' });
 
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
 
-  test('Render with placeholder', () => {
+  it('Render with placeholder', () => {
     new NativejsSelect({
       selector: '.defaultSelect',
       placeholder: 'Placholder',
@@ -31,7 +29,7 @@ describe('Custom select', () => {
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
 
-  test('Render with fixed placeholder', () => {
+  it('Render with fixed placeholder', () => {
     new NativejsSelect({
       selector: '.defaultSelect',
       fixedPlaceholder: 'fixed: placeholder',
@@ -40,7 +38,7 @@ describe('Custom select', () => {
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
 
-  test('Render with fixedPlaceholder and placeholder', () => {
+  it('Render with fixedPlaceholder and placeholder', () => {
     new NativejsSelect({
       selector: '.defaultSelect',
       placeholder: 'Placholder',
@@ -50,7 +48,7 @@ describe('Custom select', () => {
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
 
-  test('Render with custom options', () => {
+  it('Render with custom options', () => {
     new NativejsSelect({
       selector: '.defaultSelect',
       renderOptions: option => {
@@ -65,7 +63,15 @@ describe('Custom select', () => {
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
 
-  test('Render with all ui options', () => {
+  it('Render with search', () => {
+    new NativejsSelect({
+      selector: '.defaultSelect',
+      enableSearch: true,
+    });
+    expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
+  });
+
+  it('Render with all ui options', () => {
     new NativejsSelect({
       selector: '.defaultSelect',
       fixedPlaceholder: 'fixed: placeholder',
@@ -78,13 +84,14 @@ describe('Custom select', () => {
           ${option.textContent}
         `;
       },
+      enableSearch: true,
     });
 
     expect(document.querySelector('.nativejs-select').outerHTML).toMatchSnapshot();
   });
 
-  test('Render with disableMobile option', () => {
-    new NativejsSelect({ selector: '.defaultSelect', disableMobile: true });
+  it('Render with disableMobile', () => {
+    new NativejsSelect({ selector: '.defaultSelect', disableMobile: false });
     expect(document.querySelectorAll('.nativejs-select').length).toBe(1);
 
     // Mock mobile device
@@ -101,61 +108,125 @@ describe('Custom select', () => {
     expect(document.querySelectorAll('.nativejs-select').length).toBe(0);
   });
 
-  test('Handle toggle open', () => {
+  it('Handle toggle open', () => {
+    insertSelect(); // Insert second select
     new NativejsSelect({ selector: '.defaultSelect' });
 
-    const customSelect = document.querySelector('.nativejs-select');
-    const placeholderBtn = document.querySelector('.nativejs-select__placeholder') as HTMLElement;
-    const dropdownOption = document.querySelector('.nativejs-select__option_btn') as HTMLElement;
+    const customSelects = document.querySelectorAll('.nativejs-select');
+    const placeholderBtn = customSelects[0].querySelector(
+      '.nativejs-select__placeholder'
+    ) as HTMLElement;
+    const dropdownOption = customSelects[0].querySelector(
+      '.nativejs-select__option'
+    ) as HTMLElement;
 
-    // Open after placeholderBtn click
-    placeholderBtn.click();
-    expect(customSelect.classList.contains('nativejs-select_active')).toBe(true);
+    // Toggle open dropdown after placeholderBtn click
+    customSelects[1].classList.add('nativejs-select_active');
 
-    // Close after placeholderBtn click
     placeholderBtn.click();
-    expect(customSelect.classList.contains('nativejs-select_active')).toBe(false);
+    expect(customSelects[0].classList.contains('nativejs-select_active')).toBe(true);
+    expect(customSelects[1].classList.contains('nativejs-select_active')).toBe(false);
+
+    placeholderBtn.click();
+    expect(customSelects[0].classList.contains('nativejs-select_active')).toBe(false);
 
     // Close after body click
-    customSelect.classList.add('nativejs-select_active');
+    customSelects[0].classList.add('nativejs-select_active');
     document.body.click();
-    expect(customSelect.classList.contains('nativejs-select_active')).toBe(false);
+    expect(customSelects[0].classList.contains('nativejs-select_active')).toBe(false);
 
     // Close after option click
-    customSelect.classList.add('nativejs-select_active');
+    customSelects[0].classList.add('nativejs-select_active');
     dropdownOption.click();
-    expect(customSelect.classList.contains('nativejs-select_active')).toBe(false);
+    expect(customSelects[0].classList.contains('nativejs-select_active')).toBe(false);
   });
 
-  test('Handle choose option', () => {
+  it('Handle choose option', () => {
     new NativejsSelect({ selector: '.defaultSelect' });
 
     const select = document.querySelector('.defaultSelect') as HTMLSelectElement;
-    const placeholderBtn = document.querySelector('.nativejs-select__placeholder') as HTMLElement;
-    const dropdownOptions = document.querySelectorAll('.nativejs-select__option_btn') as NodeList;
+    const placeholderVal = document.querySelector(
+      '.nativejs-select__placeholder-value'
+    ) as HTMLDivElement;
+    const dropdownOptions = document.querySelectorAll('.nativejs-select__option') as NodeListOf<
+      HTMLButtonElement
+    >;
 
-    dropdownOptions.forEach((option: HTMLElement, ind) => {
+    dropdownOptions.forEach((option, ind) => {
       option.click();
 
       expect(select.selectedIndex).toBe(ind);
 
       // Check data attribute
       expect(document.querySelectorAll('[data-selected]').length).toBe(1);
-      expect((option.parentNode as HTMLElement).getAttribute('data-selected')).toBe('true');
+      expect(option.getAttribute('data-selected')).toBe('true');
 
       // Check html of placehoder
-      expect(placeholderBtn.innerHTML.trim()).toBe(option.innerHTML.trim());
+      expect(placeholderVal.innerHTML).toBe(option.innerHTML);
     });
   });
 
-  test('Check for custom select buttons not trigger submit form', () => {
+  it('Check for buttons not trigger submit form', () => {
     new NativejsSelect({ selector: '.defaultSelect' });
 
     const customSelect = document.querySelector('.nativejs-select');
-    const selectButtons = customSelect?.querySelectorAll('button');
+    const selectButtons = customSelect.querySelectorAll('button');
 
     selectButtons.forEach(btn => {
       expect(btn.getAttribute('type')).toBe('button');
+    });
+  });
+
+  it('Schould trigger change event to defaultSelect', () => {
+    new NativejsSelect({ selector: '.defaultSelect' });
+
+    const defaultSelect = document.querySelector('.defaultSelect');
+    const changeObserver = jest.fn();
+
+    defaultSelect.addEventListener('change', changeObserver);
+    (document.querySelector('.nativejs-select__option') as HTMLButtonElement).click();
+
+    expect(changeObserver).toBeCalled();
+  });
+
+  describe('Schould correct work search', () => {
+    insertSelect();
+    new NativejsSelect({ selector: '.defaultSelect', enableSearch: true });
+
+    const customSelect = document.querySelector('.nativejs-select');
+    const searchInp = customSelect.querySelector(
+      '.nativejs-select__search-inp'
+    ) as HTMLInputElement;
+    const initOptions = customSelect.querySelector('.nativejs-select__options');
+
+    ['react', 'vue', 'svelte'].forEach(word => {
+      it(`Search query "${word}"`, () => {
+        searchInp.value = word;
+        searchInp.dispatchEvent(new Event('input'));
+
+        Array.from(customSelect.querySelectorAll('.nativejs-select__option')).forEach(option => {
+          const optionVal = option.textContent.trim().toLowerCase();
+          expect(optionVal.indexOf(word) !== -1).toBe(true);
+        });
+      });
+    });
+
+    it(`If value set empty`, () => {
+      searchInp.value = '';
+      searchInp.dispatchEvent(new Event('input'));
+
+      const optionsAfterSearch = customSelect.querySelector('.nativejs-select__options');
+      expect(initOptions.innerHTML === optionsAfterSearch.innerHTML).toBe(true);
+    });
+
+    it(`Should reset options after clicked on found option`, () => {
+      searchInp.value = 'react';
+      searchInp.dispatchEvent(new Event('input'));
+
+      (customSelect.querySelector('.nativejs-select__option') as HTMLButtonElement).click();
+
+      const optionsAfterSearch = customSelect.querySelector('.nativejs-select__options');
+      expect(initOptions.innerHTML === optionsAfterSearch.innerHTML).toBe(true);
     });
   });
 });

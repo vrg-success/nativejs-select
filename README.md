@@ -5,7 +5,7 @@
 ![alt text](https://github.com//FrontendMetis/nativejs-select/blob/master/devserver/img/nativejs-select.png?raw=true)
 
 **Why do I need use this?**\
-I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6kb and have required options, the plugin written on Typescript without boilerplate
+I made this plugin for me, because I don't need analogs with big size, the plugin have size only 6kb and have required options, the plugin written on Typescript without boilerplate. By the way the plugin has support IE11)
 
 **Getting started**
 
@@ -44,13 +44,16 @@ new NativejsSelect({
 | fixedPlaceholder? | string                                                         | fixed placeholder                                                |
 | disableMobile?    | boolean                                                        | disable castomization in mobile devices for better accessibility |
 | renderOptions?    | (option: HTMLElement, index: number, length: number) => string | you can render options like you want                             |
+| enableSearch?     | boolean                                                        | Allow search by options                                          |
 
-**Html attributes**
+**You can also use html attributes for setup**
 
-| Name                  |
-| --------------------- |
-| data-placeholder      |
-| data-fixedPlaceholder |
+| Name                   |
+| ---------------------- |
+| data-fixed-placeholder |
+| data-placeholder       |
+| data-disable-mobile    |
+| data-enable-search     |
 
 **Cross-browser testing provided by** \
 <a href="https://www.browserstack.com/" target="_blank">
