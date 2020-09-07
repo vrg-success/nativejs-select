@@ -1,6 +1,7 @@
 new NativejsSelect({
   selector: '.defaultSelect',
   disableMobile: true,
+  enableSearch: true,
   renderOptions: function renderOptions(option, index, length) {
     var icon = option.getAttribute('data-icon');
     return (

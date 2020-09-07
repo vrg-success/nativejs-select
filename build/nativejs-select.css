@@ -3,13 +3,13 @@
   margin: 0 auto;
   margin-top: 30px;
   position: relative;
-  border: 1px solid #1D1D1D;
+  border: 1px solid #1d1d1d;
   border-radius: 3px;
   cursor: pointer;
 }
 
 .nativejs-select__placeholder,
-.nativejs-select__option_btn {
+.nativejs-select__option {
   cursor: pointer;
   border: none;
   outline: none;
@@ -24,14 +24,14 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  background-color: #0C0C0C;
+  background-color: #0c0c0c;
 }
 
 .nativejs-select__placeholder:after {
   content: '';
   display: block;
   width: 0;
-  border-top: 6px solid #7CA95C;
+  border-top: 6px solid #7ca95c;
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
   position: absolute;
@@ -46,10 +46,10 @@
 
 .nativejs-select__placeholder_fixed {
   padding-right: 5px;
-  color: #7CA95C;
+  color: #7ca95c;
 }
 
-.nativejs-select__options {
+.nativejs-select__dropdown {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -60,31 +60,26 @@
   bottom: -1px;
   z-index: 5;
   display: none;
-  border-left: 1px solid #1D1D1D;
-  border-right: 1px solid #1D1D1D;
+  border: 1px solid #1d1d1d;
 }
 
 .nativejs-select__option {
-  list-style-type: none;
-}
-
-.nativejs-select__option_btn {
   width: 100%;
   padding: 10px 15px;
   font-style: italic;
   color: #ccc;
-  background-color: #0C0C0C;
-  border-bottom: 1px solid #1D1D1D;
+  background-color: #0c0c0c;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid transparent;
 }
 
-.nativejs-select__option_btn img {
+.nativejs-select__option img {
   margin-right: 10px;
 }
 
-.nativejs-select__option_btn:hover {
-  border-bottom: 1px solid #7CA95C;
+.nativejs-select__option:hover {
+  border-bottom: 1px solid #7ca95c;
 }
 
 .nativejs-select_active {
@@ -93,12 +88,27 @@
 
 .nativejs-select_active .nativejs-select__placeholder:after {
   border-top: none;
-  border-bottom: 6px solid #7CA95C;
+  border-bottom: 6px solid #7ca95c;
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
 }
 
-.nativejs-select_active .nativejs-select__options {
+.nativejs-select_active .nativejs-select__dropdown {
   display: block;
   border-radius: 0 0 3px 3px;
+}
+
+.nativejs-select__search {
+  padding: 5px;
+}
+
+.nativejs-select__search-inp {
+  box-sizing: border-box;
+  width: 100%;
+  height: 30px;
+}
+
+.nativejs-select__placeholder-value {
+  display: flex;
+  align-items: center;
 }

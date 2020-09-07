@@ -2,55 +2,60 @@
 
 exports[`Custom select Render default 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder"
-          type="button"
+  <button type="button"
+          class="nativejs-select__placeholder"
   >
-    React
+    <div class="nativejs-select__placeholder-value">
+      React
+    </div>
   </button>
-  <ul class="nativejs-select__options">
-    <li class="nativejs-select__option"
-        data-selected="true"
-    >
-      <button class="nativejs-select__option_btn"
-              type="button"
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
       >
         React
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Vue
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Svelte
       </button>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Custom select Render with all ui options 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder"
-          type="button"
+  <button type="button"
+          class="nativejs-select__placeholder"
   >
-    <span class="nativejs-select__placeholder_fixed">
+    <span class="nativejs-select__placeholder-fixed">
       fixed: placeholder
     </span>
-    Placholder
+    <div class="nativejs-select__placeholder-value">
+      Placholder
+    </div>
   </button>
-  <ul class="nativejs-select__options">
-    <li class="nativejs-select__option"
-        data-selected="true"
-    >
-      <button class="nativejs-select__option_btn"
-              type="button"
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__search">
+      <input type="text"
+             class="nativejs-select__search-inp"
+      >
+    </div>
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
       >
         <img src="img/react.png"
              alt="icon"
@@ -58,10 +63,9 @@ exports[`Custom select Render with all ui options 1`] = `
         >
         React
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         <img src="img/vue.png"
              alt="icon"
@@ -69,10 +73,9 @@ exports[`Custom select Render with all ui options 1`] = `
         >
         Vue
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         <img src="img/svelte.png"
              alt="icon"
@@ -80,28 +83,29 @@ exports[`Custom select Render with all ui options 1`] = `
         >
         Svelte
       </button>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Custom select Render with custom options 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder"
-          type="button"
+  <button type="button"
+          class="nativejs-select__placeholder"
   >
-    <img src="img/react.png"
-         alt="icon"
-         style="width: 20px;"
-    >
-    React
+    <div class="nativejs-select__placeholder-value">
+      <img src="img/react.png"
+           alt="icon"
+           style="width: 20px;"
+      >
+      React
+    </div>
   </button>
-  <ul class="nativejs-select__options">
-    <li class="nativejs-select__option"
-        data-selected="true"
-    >
-      <button class="nativejs-select__option_btn"
-              type="button"
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
       >
         <img src="img/react.png"
              alt="icon"
@@ -109,10 +113,9 @@ exports[`Custom select Render with custom options 1`] = `
         >
         React
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         <img src="img/vue.png"
              alt="icon"
@@ -120,10 +123,9 @@ exports[`Custom select Render with custom options 1`] = `
         >
         Vue
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         <img src="img/svelte.png"
              alt="icon"
@@ -131,118 +133,154 @@ exports[`Custom select Render with custom options 1`] = `
         >
         Svelte
       </button>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Custom select Render with fixed placeholder 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder"
-          type="button"
+  <button type="button"
+          class="nativejs-select__placeholder"
   >
-    <span class="nativejs-select__placeholder_fixed">
+    <span class="nativejs-select__placeholder-fixed">
       fixed: placeholder
     </span>
-    React
+    <div class="nativejs-select__placeholder-value">
+      React
+    </div>
   </button>
-  <ul class="nativejs-select__options">
-    <li class="nativejs-select__option"
-        data-selected="true"
-    >
-      <button class="nativejs-select__option_btn"
-              type="button"
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
       >
         React
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Vue
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Svelte
       </button>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Custom select Render with fixedPlaceholder and placeholder 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder"
-          type="button"
+  <button type="button"
+          class="nativejs-select__placeholder"
   >
-    <span class="nativejs-select__placeholder_fixed">
+    <span class="nativejs-select__placeholder-fixed">
       fixed: placeholder
     </span>
-    Placholder
+    <div class="nativejs-select__placeholder-value">
+      Placholder
+    </div>
   </button>
-  <ul class="nativejs-select__options">
-    <li class="nativejs-select__option"
-        data-selected="true"
-    >
-      <button class="nativejs-select__option_btn"
-              type="button"
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
       >
         React
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Vue
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Svelte
       </button>
-    </li>
-  </ul>
+    </div>
+  </div>
 </div>
 `;
 
 exports[`Custom select Render with placeholder 1`] = `
 <div class="nativejs-select">
-  <button class="nativejs-select__placeholder"
-          type="button"
+  <button type="button"
+          class="nativejs-select__placeholder"
   >
-    Placholder
+    <div class="nativejs-select__placeholder-value">
+      Placholder
+    </div>
   </button>
-  <ul class="nativejs-select__options">
-    <li class="nativejs-select__option"
-        data-selected="true"
-    >
-      <button class="nativejs-select__option_btn"
-              type="button"
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
       >
         React
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Vue
       </button>
-    </li>
-    <li class="nativejs-select__option">
-      <button class="nativejs-select__option_btn"
-              type="button"
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
       >
         Svelte
       </button>
-    </li>
-  </ul>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Custom select Render with search 1`] = `
+<div class="nativejs-select">
+  <button type="button"
+          class="nativejs-select__placeholder"
+  >
+    <div class="nativejs-select__placeholder-value">
+      React
+    </div>
+  </button>
+  <div class="nativejs-select__dropdown">
+    <div class="nativejs-select__search">
+      <input type="text"
+             class="nativejs-select__search-inp"
+      >
+    </div>
+    <div class="nativejs-select__options">
+      <button type="button"
+              data-selected="true"
+              class="nativejs-select__option"
+      >
+        React
+      </button>
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
+      >
+        Vue
+      </button>
+      <button type="button"
+              data-selected="false"
+              class="nativejs-select__option"
+      >
+        Svelte
+      </button>
+    </div>
+  </div>
 </div>
 `;

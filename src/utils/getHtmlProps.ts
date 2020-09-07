@@ -1,11 +1,10 @@
 import type { ObjString } from 'types';
 
 export function getHtmlProps(select: HTMLSelectElement): ObjString {
-  const htmlOptions = ['data-placeholder', 'data-fixed-placeholder', 'data-search'];
   const props = {};
 
   Array.from(select.attributes)
-    .filter(attr => htmlOptions.indexOf(attr.name) !== -1)
+    .filter(attr => attr.name.indexOf('data-') !== -1)
     .forEach(attr => {
       const optionName = attr.name
         .replace('data-', '')
