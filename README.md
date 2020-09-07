@@ -44,13 +44,16 @@ new NativejsSelect({
 | fixedPlaceholder? | string                                                         | fixed placeholder                                                |
 | disableMobile?    | boolean                                                        | disable castomization in mobile devices for better accessibility |
 | renderOptions?    | (option: HTMLElement, index: number, length: number) => string | you can render options like you want                             |
+| enableSearch?     | boolean                                                        | Allow search by options                                          |
 
-**Html attributes**
+**You can also use html attributes for setup**
 
 | Name                   |
 | ---------------------- |
-| data-placeholder       |
 | data-fixed-placeholder |
+| data-placeholder       |
+| data-disable-mobile    |
+| data-enable-search     |
 
 **Cross-browser testing provided by** \
 <a href="https://www.browserstack.com/" target="_blank">
